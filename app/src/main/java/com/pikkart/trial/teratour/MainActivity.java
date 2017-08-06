@@ -41,6 +41,7 @@ public class MainActivity extends AppCompatActivity{
 
         if(Build.VERSION.SDK_INT < 23){
             startActivity(new Intent(getBaseContext(),ImageCloudRecoClass.class));
+            finish();
         }
         else
         {
@@ -73,8 +74,22 @@ public class MainActivity extends AppCompatActivity{
         }
         else {
             startActivity(new Intent(getBaseContext(),ImageCloudRecoClass.class));
+            finish();
         }
     }
+
+//    ProfileTracker fbProfileTracker = new ProfileTracker() {
+//        @Override
+//        protected void onCurrentProfileChanged(Profile oldProfile, Profile currentProfile) {
+//            // User logged in or changed profile
+//        }
+//    };
+//    Check login status and then get user name:
+//
+//    Profile profile = Profile.getCurrentProfile();
+//    if (profile != null) {
+//        Log.v(TAG, "Logged, user name=" + profile.getFirstName() + " " + profile.getLastName());
+//    }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
@@ -85,6 +100,7 @@ public class MainActivity extends AppCompatActivity{
             }
             if(ok) {
                 startActivity(new Intent(getBaseContext(),ImageCloudRecoClass.class));
+                finish();
             }
             else {
                 Toast.makeText(this, "Error: required permissions not granted!", Toast.LENGTH_SHORT).show();

@@ -14,7 +14,7 @@ import com.facebook.FacebookSdk;
 import com.pikkart.trial.teratour.R;
 
 public class SplashScreenActivity extends AppCompatActivity {
-    long SplashScreenTimer = 3000;
+    long SplashScreenTimer = 2000;
     String AppName = "TeraTour";
     //declare facebook callbackmanager
     CallbackManager mFacebookCallbackManager;

@@ -79,6 +79,7 @@ public class MarkerDetailsDialogFragment extends DialogFragment {
                 try{
                     LoginManager.getInstance().logOut();
                     startActivity(new Intent(getActivity(), SignInActivity.class));
+                    getActivity().finish();
                 }
                 catch (Exception e){
                     Log.e("LogOutError",e.getMessage());
