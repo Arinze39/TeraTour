@@ -1,0 +1,53 @@
+<resources>
+    <string name="app_name">TeraTour</string>
+    <string name = "facebook_app_id">154078515170014</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="doc"> PRISTINE HILLS CENTER\n\n \tPristine Hills Centre (PHC) is a registered Evangelical Christian Movement powered by the mandate of
+        recruiting, enlisting and galvanizing all classes of people; the leaders and the led, the rich and the poor, the aged and the youth and all men and women
+        of goodwill to the patriotic project of propagating and establishing the kingdom of God in all nations of the world. PHC is principally focused at eradicating
+        poverty, diseases, hunger, mass illiteracy, unemployment, crime, suicide, and other political, socio-economic and moral vices prevalent in every nation of the
+        world through the preaching of the kingdom of God as well as establishing on earth the systems and structures that runs God\�s kingdom. PHC believes that God\�s
+        kingdom is a country founded on a set of values and systems. We also belief that the church is the singular institution saddled with the responsibility of bringing
+        God\�s kingdom, its systems and values to the earth and by extension help man rediscover his dominion and kingly mandate on earth.
+        Pristine Hills is committed to establishing a LEADERSHIP ORGANIZATION dedicated to setting a PRECEDENT, raising a STANDARD, and producing a MODEL of excellence in personal,
+        community, national and international leadership based on kingdom values.\n
+        \tPristine Hills Centre (PHC) presently has its headquarters in Abakaliki, the capital city of Ebonyi State, Nigeria. We are committed to establishing more branches of PHC
+        everywhere in the world. The headquarter is located at No. 27 Onwe Road, Opposite Hope High International, GRA, Abakaliki. The Church also have its branch presently at International
+        Trade Center, Ezza Road, Abakaliki. For more information contact/visit the church website on www.pristinehills.org, you can also stay connected through the facebook page www.facebook.com/pristinehills
+        or add our account profile via pristine hills.\n\n
+
+        The objectives of PHC shall among others include the following;\n\n
+        To refashion and foster a global leadership that will be anchored on character, ideas, vision, dreams, charismatic enthusiasm, patriotism for service and sacrifice of oneself for the good of all.\n\n
+        To build a new society founded on the principles and values of God\�s kingdom.\n\n
+        To restore and entrench love, service and sacrifice as the real defining essence of leadership.\n\n
+        To raise a platform of discussion, interaction and exchange of ideas among people for the advancement of national development.\n\n
+        To inaugurate, convoke, galvanize, train, develop and energize the youths as the future rallying point of tomorrow\�s leadership and bastions of the present global leadership.\n\n
+        To teach present and future leaders that character backed up with competence and excellence among other virtues are essential criteria for leadership success.\n\n
+        To teach, train and empower the youths for self-reliance through entrepreneurship and financial education.\n\n
+        To show love to the poor, needy and destitute and help them attain better life and a worthwhile future.\n\n
+        To help people become visionary and successful by teaching them the underlying principles of success in any sphere of life they occupy.\n\n
+        To help people mature in the things of Spirit, through the teaching of the uncompromised Word of God.\n\n
+
+        VISION\n\n
+
+        To become the world\'s number one most effective church of transformed Priest and kings and value-based global leaders who are passionate in the worship of God and endlessly
+        committed to the propagation of His kingdom in all nations of the world through preaching the uncompromised and infallible gospel of the kingdom.\n\n
+
+        MISSION\n\n
+
+        To deliver and disciple every believer into the stature of Christ\�s total maturity (mental, spiritual and social) and by so doing, release a united body of transformational
+        leaders with a strong sense of purpose and ministry to all spheres of the society.\n\n
+
+        CORE VALUES\n\n
+
+        Service\n
+        Humility\n
+        Integrity\n
+        Excellence\n
+        Love\n
+        Dedication\n</string>
+    <string name="title_activity_splash_screen">SplashScreenActivity</string>
+    <string name="title_activity_sign_in">SignInActivity</string>
+</resources>

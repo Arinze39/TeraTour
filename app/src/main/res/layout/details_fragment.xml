@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/MainLayout"
+    android:layout_width="320dp"
+    android:layout_height="450dp"
+    android:layout_gravity="center"
+    android:orientation="vertical"
+    android:background="@android:drawable/dialog_holo_light_frame"
+
+    >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="5dp"
+        android:background="@drawable/layoutbg">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/linear1"
+            android:orientation="horizontal"
+            >
+            <TextView
+
+                android:textSize="20sp"
+                android:typeface="serif"
+                android:id="@+id/TitleText"
+                android:paddingBottom="15dp"
+                android:layout_width="200dp"
+                android:layout_height="match_parent"
+                android:scrollbars="vertical"
+                android:textStyle="bold"
+                android:background="#ff0000"
+                android:elevation="12dp"
+                android:gravity="center"
+                />
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="#07000000" />
+
+
+            <Button
+                android:layout_width="37dp"
+                android:layout_height="50dp"
+                style="?android:buttonBarStyle"
+                android:id="@+id/download"
+                android:background="@drawable/download"
+                android:textSize="16sp"
+                android:clickable="false"
+                android:enabled="false"
+                android:elevation="12dp" />
+        </LinearLayout>
+
+
+
+        <ScrollView
+            android:id="@+id/scrollView"
+            android:layout_width="wrap_content"
+            android:layout_below="@+id/linear1"
+            android:layout_above="@+id/linear2"
+            android:paddingTop="@dimen/activity_vertical_margin"
+            android:layout_height="wrap_content">
+            <RelativeLayout
+                android:id="@+id/relativelayout2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:id="@+id/images"
+                    android:adjustViewBounds="true"
+                    android:background="@drawable/image1"
+                    android:elevation="12dp" />
+
+                <TextView
+                    android:text="@string/doc"
+                    android:id="@+id/DetailsText"
+                    android:paddingTop="12dp"
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/images"/>
+
+            </RelativeLayout>
+        </ScrollView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            style="?android:buttonBarStyle"
+            android:id="@+id/linear2"
+            android:paddingTop="12dp"
+            android:orientation="horizontal">
+
+            <Button
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                style="?android:buttonBarStyle"
+                android:id="@+id/fb"
+                android:background="@drawable/share"
+                android:clickable="true" />
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                />
+
+            <Button
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                style="?android:buttonBarStyle"
+                android:id="@+id/comment"
+                android:background="@drawable/comment"
+                android:clickable="true" />
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                />
+
+            <Button
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                style="?android:buttonBarStyle"
+                android:id="@+id/like"
+                android:background="@drawable/unlike"
+                android:clickable="true" />
+
+
+
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+</LinearLayout>
