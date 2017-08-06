@@ -3,11 +3,13 @@ package com.pikkart.trial.teratour;
 /**
  * Created by Arinze on 8/2/2017.
  */
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.text.method.ScrollingMovementMethod;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +17,8 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import com.facebook.login.LoginManager;
 // ...
 
 public class MarkerDetailsDialogFragment extends DialogFragment {
@@ -69,29 +73,41 @@ public class MarkerDetailsDialogFragment extends DialogFragment {
         TitleTextView.setMovementMethod(new ScrollingMovementMethod());
         TitleTextView.setText(title);
 
+        downloadButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try{
+                    LoginManager.getInstance().logOut();
+                    startActivity(new Intent(getActivity(), SignInActivity.class));
+                }
+                catch (Exception e){
+                    Log.e("LogOutError",e.getMessage());
+                }
+
+            }
+        });
+
         likeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String text2 = likeButton.getText().toString();
                 String text = "1";
                 int count;
-                if(text2.isEmpty())
-                {
-                    view.setBackgroundResource(R.drawable.like); like = true;
-                }
-                else{                    
-                    if(!like) {
+                if (text2.isEmpty()) {
+                    view.setBackgroundResource(R.drawable.like);
+                    like = true;
+                } else {
+                    if (!like) {
                         view.setBackgroundResource(R.drawable.like);
                         count = Integer.valueOf(text2);
                         count++;
                         text = String.valueOf(count);
                         like = true;
-                    }
-                    else{
+                    } else {
                         view.setBackgroundResource(R.drawable.unlike);
                         count = Integer.valueOf(text2);
                         count--;
-                        text = (count==0) ? "" : String.valueOf(count);
+                        text = (count == 0) ? "" : String.valueOf(count);
                         like = false;
                     }
                 }
