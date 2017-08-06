@@ -37,20 +37,6 @@ public class SignInActivity extends AppCompatActivity {
         FacebookSdk.sdkInitialize(getApplicationContext());
         mFacebookCallbackManager = CallbackManager.Factory.create();
 
-        accessTokenTracker = new AccessTokenTracker() {
-            @Override
-            protected void onCurrentAccessTokenChanged(
-                    AccessToken oldAccessToken,
-                    AccessToken currentAccessToken) {
-                // Set the access token using
-                // currentAccessToken when it's loaded or set.
-                accessToken = currentAccessToken;
-            }
-        };
-        // If the access token is available already assign it.
-        accessToken = AccessToken.getCurrentAccessToken();
-
-
         setContentView(R.layout.activity_sign_in);
 
         //Setup the callback for facebook button

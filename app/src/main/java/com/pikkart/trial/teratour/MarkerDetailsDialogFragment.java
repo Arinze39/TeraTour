@@ -4,7 +4,10 @@ package com.pikkart.trial.teratour;
  * Created by Arinze on 8/2/2017.
  */
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
@@ -13,12 +16,15 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
+
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+
 import com.facebook.login.LoginManager;
+
+
 // ...
 
 public class MarkerDetailsDialogFragment extends DialogFragment {
@@ -27,6 +33,7 @@ public class MarkerDetailsDialogFragment extends DialogFragment {
     private TextView TitleTextView;
     private Button downloadButton, likeButton, fbButton,commentButton;
     boolean like = false;
+
 //    static String Title;
 
     public MarkerDetailsDialogFragment() {
@@ -69,6 +76,7 @@ public class MarkerDetailsDialogFragment extends DialogFragment {
         downloadButton = (Button)view.findViewById(R.id.download);
         TitleTextView = (TextView)view.findViewById(R.id.TitleText);
 
+
         String title = getArguments().getString("title", "marker Title");
         TitleTextView.setMovementMethod(new ScrollingMovementMethod());
         TitleTextView.setText(title);
@@ -76,17 +84,18 @@ public class MarkerDetailsDialogFragment extends DialogFragment {
         downloadButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                try{
+                try {
                     LoginManager.getInstance().logOut();
                     startActivity(new Intent(getActivity(), SignInActivity.class));
                     getActivity().finish();
-                }
-                catch (Exception e){
-                    Log.e("LogOutError",e.getMessage());
+                } catch (Exception e) {
+                    Log.e("LogOutError", e.getMessage());
                 }
 
             }
         });
+
+
 
         likeButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -125,4 +134,7 @@ public class MarkerDetailsDialogFragment extends DialogFragment {
 //        getDialog().getWindow().setSoftInputMode(
 //                WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
     }
+
+
+
 }
