@@ -9,6 +9,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import com.facebook.AccessToken;
+import com.facebook.AccessTokenTracker;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
@@ -24,6 +26,8 @@ public class SignInActivity extends AppCompatActivity {
     //declare facebook callbackmanager
     CallbackManager mFacebookCallbackManager;
     LoginButton mFacebookSignInButton;
+    AccessTokenTracker accessTokenTracker;
+    AccessToken accessToken;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +36,19 @@ public class SignInActivity extends AppCompatActivity {
         //Facebook SDK Initialization
         FacebookSdk.sdkInitialize(getApplicationContext());
         mFacebookCallbackManager = CallbackManager.Factory.create();
+
+        accessTokenTracker = new AccessTokenTracker() {
+            @Override
+            protected void onCurrentAccessTokenChanged(
+                    AccessToken oldAccessToken,
+                    AccessToken currentAccessToken) {
+                // Set the access token using
+                // currentAccessToken when it's loaded or set.
+                accessToken = currentAccessToken;
+            }
+        };
+        // If the access token is available already assign it.
+        accessToken = AccessToken.getCurrentAccessToken();
 
 
         setContentView(R.layout.activity_sign_in);
@@ -83,6 +100,12 @@ public class SignInActivity extends AppCompatActivity {
         );
 
 
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        accessTokenTracker.stopTracking();
     }
 
     public void logIn(View v){
