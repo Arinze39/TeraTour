@@ -31,7 +31,7 @@ public class SplashScreenActivity extends AppCompatActivity {
                         time += 100;
                     }
                     //Advance to the next Screen
-                    startActivity(new Intent("com.pikkart.trial.teratour.signIn"));
+                    startActivity(new Intent(getBaseContext(),SignInActivity.class));
 
                 } catch (Exception e) {
                     Toast.makeText(SplashScreenActivity.this,"Error starting" + AppName + "\nTry shutting down other apps before restarting this app", Toast.LENGTH_SHORT).show();

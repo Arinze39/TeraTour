@@ -47,7 +47,7 @@ public class SignInActivity extends AppCompatActivity {
                         try
                         {
                             //Advance to the next Screen
-                            startActivity(new Intent("com.pikkart.trial.teratour.main"));
+                            startActivity(new Intent(getBaseContext(),MainActivity.class));
                         }
                         catch (Exception ex)
                         {

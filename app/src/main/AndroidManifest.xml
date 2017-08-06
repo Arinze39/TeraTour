@@ -27,12 +27,8 @@
         android:configChanges="screenSize|orientation"
         android:name=".MainActivity"
         android:label="@string/app_name" >
-        <intent-filter>
-            <action android:name="android.intent.action.main" />
-
-            <category android:name="android.intent.category.DEFAULT" />
-        </intent-filter>
     </activity>
+
         <activity
             android:configChanges="screenSize|orientation"
             android:name=".SplashScreenActivity"
@@ -44,24 +40,21 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:configChanges="screenSize|orientation"
-            android:name=".SignInActivity"
-            android:theme="@style/splashTheme"
-             >
-            <intent-filter>
-                <action android:name="android.intent.action.signIn" />
 
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
+        <activity
+            android:theme="@style/splashTheme"
+            android:name=".SignInActivity"
+             >
         </activity>
+
         <activity
             android:configChanges="screenSize|orientation"
             android:name=".ImageCloudRecoClass"
             android:label="@string/app_name" >
         </activity>
 
-        <activity android:name="com.facebook.FacebookActivity"
+        <activity
+            android:name="com.facebook.FacebookActivity"
             android:configChanges=
                 "keyboard|keyboardHidden|screenLayout|screenSize|orientation"
             android:theme="@style/splashTheme"
