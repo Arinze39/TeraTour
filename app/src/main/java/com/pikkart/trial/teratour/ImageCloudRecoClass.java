@@ -47,6 +47,7 @@ public class ImageCloudRecoClass extends AppCompatActivity implements IRecogniti
 
     }
 
+
     private void initLayout()
     {
         setContentView(R.layout.activity_main);

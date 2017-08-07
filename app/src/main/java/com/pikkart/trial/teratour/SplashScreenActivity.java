@@ -88,6 +88,11 @@ public class SplashScreenActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.menu_splash_screen, menu);
         return true;
     }
+    @Override
+    public void onResume()
+    {
+        super.onResume();
+    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

@@ -91,7 +91,13 @@ public class SignInActivity extends AppCompatActivity {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        accessTokenTracker.stopTracking();
+        //accessTokenTracker.stopTracking();
+    }
+
+    @Override
+    public void onResume()
+    {
+        super.onResume();
     }
 
     public void logIn(View v){

@@ -50,7 +50,11 @@ public class MainActivity extends AppCompatActivity{
 
     }
 
-
+    @Override
+    public void onResume()
+    {
+        super.onResume();
+    }
 
     private void checkPermissions(int code) {
         String[] permissions_required = new String[] {
