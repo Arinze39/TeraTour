@@ -10,4 +10,8 @@
 
     </style>
 
+    <style name="SignInTheme" parent="Theme.AppCompat.NoActionBar">
+
+    </style>
+
 </resources>

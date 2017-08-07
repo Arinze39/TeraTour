@@ -1,6 +1,7 @@
 package com.pikkart.trial.teratour;
 
 import android.content.Intent;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -70,7 +71,9 @@ public class SplashScreenActivity extends AppCompatActivity {
 
 
                 } catch (Exception e) {
-                    Toast.makeText(SplashScreenActivity.this,"Error starting" + AppName + "\nTry shutting down other apps before restarting this app", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SplashScreenActivity.this,"Error starting" + AppName +
+                            "\nTry shutting down other apps before restarting this app", Toast.LENGTH_SHORT).show();
+                    finish();
                 }
                 finally {
                     finish();

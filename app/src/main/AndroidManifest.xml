@@ -42,7 +42,7 @@
         </activity>
 
         <activity
-            android:theme="@style/splashTheme"
+            android:theme="@style/SignInTheme"
             android:name=".SignInActivity"
              >
         </activity>
