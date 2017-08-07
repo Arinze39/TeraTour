@@ -21,9 +21,15 @@ android {
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
-    compile 'com.android.support:appcompat-v7:26.0.0-alpha1'
-    compile 'com.facebook.android:facebook-android-sdk:4.6.0'
     compile(name: 'pikkart_ar_sdk', ext: 'aar')
+    compile 'com.android.support:appcompat-v7:26.0.0-alpha1'
+    // Include all the Twitter APIs
+    compile 'com.twitter.sdk.android:twitter:3.1.0'
+    compile 'com.twitter.sdk.android:twitter-core:3.1.0'
+    compile 'com.twitter.sdk.android:tweet-composer:3.1.0'
+    // Include all the Facebook APIs
+    compile 'com.facebook.android:facebook-android-sdk:4.6.0'
+
 }
 
 repositories {

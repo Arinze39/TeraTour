@@ -19,6 +19,13 @@ import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 
+import com.twitter.sdk.android.core.Callback;
+import com.twitter.sdk.android.core.Result;
+import com.twitter.sdk.android.core.Twitter;
+import com.twitter.sdk.android.core.TwitterException;
+import com.twitter.sdk.android.core.TwitterSession;
+import com.twitter.sdk.android.core.identity.TwitterLoginButton;
+
 import java.util.Arrays;
 
 public class SignInActivity extends AppCompatActivity {
@@ -26,6 +33,7 @@ public class SignInActivity extends AppCompatActivity {
     //declare facebook callbackmanager
     CallbackManager mFacebookCallbackManager;
     LoginButton mFacebookSignInButton;
+    TwitterLoginButton loginButton;
     AccessTokenTracker accessTokenTracker;
     AccessToken accessToken;
 
@@ -35,9 +43,27 @@ public class SignInActivity extends AppCompatActivity {
 
         //Facebook SDK Initialization
         FacebookSdk.sdkInitialize(getApplicationContext());
+        Twitter.initialize(this);
         mFacebookCallbackManager = CallbackManager.Factory.create();
 
         setContentView(R.layout.activity_sign_in);
+
+
+        //set the callback for twitter button
+        loginButton = (TwitterLoginButton) findViewById(R.id.login_button);
+        loginButton.setCallback(new Callback<TwitterSession>() {
+            @Override
+            public void success(Result<TwitterSession> result) {
+                //TODO: Do something with result, which provides a TwitterSession for making API calls
+                HandleSignIn();
+            }
+
+            @Override
+            public void failure(TwitterException exception) {
+                // Do something on failure
+                Log.d(SignInActivity.class.getCanonicalName(), exception.getMessage());
+            }
+        });
 
         //Setup the callback for facebook button
         mFacebookSignInButton = (LoginButton)findViewById(R.id.facebook_sign_in_button);
@@ -46,28 +72,7 @@ public class SignInActivity extends AppCompatActivity {
                     @Override
                     public void onSuccess(final LoginResult loginResult) {
                         //TODO: Use the Profile class to get information about the current user.
-
-                        try
-                        {
-                            //Advance to the next Screen
-                            startActivity(new Intent(getBaseContext(),MainActivity.class));
-                        }
-                        catch (Exception ex)
-                        {
-                            Toast.makeText(SignInActivity.this, "Error starting Teratour\n" +
-                                    "Try shutting down other apps before restarting this app", Toast.LENGTH_SHORT).show();
-                        }
-                        finally {
-                            finish();
-                        }
-
-//                        handleSignInResult(new Callable<Void>() {
-//                            @Override
-//                            public Void call() throws Exception {
-//                                LoginManager.getInstance().logOut();
-//                                return null;
-//                            }
-//                        });
+                        HandleSignIn();
                     }
 
                     @Override
@@ -84,8 +89,22 @@ public class SignInActivity extends AppCompatActivity {
                     }
                 }
         );
+    }
 
-
+    public void HandleSignIn(){
+        try
+        {
+            //Advance to the next Screen
+            startActivity(new Intent(getBaseContext(),MainActivity.class));
+        }
+        catch (Exception ex)
+        {
+            Toast.makeText(SignInActivity.this, "Error starting Teratour\n" +
+                    "Try shutting down other apps before restarting this app", Toast.LENGTH_SHORT).show();
+        }
+        finally {
+            finish();
+        }
     }
 
     @Override
@@ -100,16 +119,15 @@ public class SignInActivity extends AppCompatActivity {
         super.onResume();
     }
 
-    public void logIn(View v){
-
-        LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList("public_profile"));
-    }
-
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
+        // Pass the activity result to the FacebookLogin button
         mFacebookCallbackManager.onActivityResult(requestCode, resultCode, data);
+
+        // Pass the activity result to the TwitterLogin button.
+        loginButton.onActivityResult(requestCode, resultCode, data);
     }
 
     @Override
