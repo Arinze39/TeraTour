@@ -2,25 +2,22 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin"
     android:orientation="vertical"
     android:layout_gravity="center"
     android:background="@android:drawable/dialog_holo_light_frame"
     tools:context="com.pikkart.trial.teratour.LogInFragment">
 
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:paddingLeft="@dimen/activity_horizontal_margin"
         android:paddingRight="@dimen/activity_horizontal_margin"
         android:paddingTop="@dimen/activity_vertical_margin"
         android:paddingBottom="@dimen/activity_vertical_margin"
         android:elevation="16dp"
         android:orientation="vertical"
-        android:background="@drawable/layoutbg">
+        android:background="@drawable/layoutbg"
+        >
 
         <ImageView
             android:layout_width="match_parent"
