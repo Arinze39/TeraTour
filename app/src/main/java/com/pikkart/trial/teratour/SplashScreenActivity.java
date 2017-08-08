@@ -12,6 +12,7 @@ import com.facebook.AccessToken;
 import com.facebook.AccessTokenTracker;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookSdk;
+import com.twitter.sdk.android.core.Twitter;
 import com.twitter.sdk.android.core.TwitterAuthToken;
 import com.twitter.sdk.android.core.TwitterCore;
 import com.twitter.sdk.android.core.TwitterSession;
@@ -38,6 +39,7 @@ public class SplashScreenActivity extends AppCompatActivity {
 
         //Facebook SDK Initialization
         FacebookSdk.sdkInitialize(getApplicationContext());
+        Twitter.initialize(this);
         //mFacebookCallbackManager = CallbackManager.Factory.create();
 
         //Draw the splash screen
@@ -84,7 +86,7 @@ public class SplashScreenActivity extends AppCompatActivity {
 
 
                 } catch (Exception e) {
-                    Toast.makeText(SplashScreenActivity.this,"Error starting" + AppName +
+                    Toast.makeText(getApplicationContext(),"Error starting" + AppName +
                             "\nTry shutting down other apps before restarting this app", Toast.LENGTH_SHORT).show();
                     finish();
                 }

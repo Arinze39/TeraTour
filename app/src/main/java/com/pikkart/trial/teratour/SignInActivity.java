@@ -3,15 +3,19 @@ package com.pikkart.trial.teratour;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
+import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.facebook.AccessToken;
@@ -30,6 +34,7 @@ import com.twitter.sdk.android.core.Twitter;
 import com.twitter.sdk.android.core.TwitterException;
 import com.twitter.sdk.android.core.TwitterSession;
 import com.twitter.sdk.android.core.identity.TwitterLoginButton;
+import com.twitter.sdk.android.core.models.User;
 
 import java.util.Arrays;
 
@@ -55,6 +60,12 @@ public class SignInActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_sign_in);
 
+//        ImageView image = (ImageView)findViewById(R.id.displayImage);
+//        draw(image, R.drawable.image1);
+
+
+
+
 
         //set the callback for twitter button
         mTwitterLoginButton = (TwitterLoginButton) findViewById(R.id.login_button);
@@ -73,7 +84,7 @@ public class SignInActivity extends AppCompatActivity {
         });
 
         //Setup the callback for facebook button
-        mFacebookLogInButton = (LoginButton)findViewById(R.id.facebook_sign_in_button);
+        mFacebookLogInButton = (LoginButton) findViewById(R.id.facebook_sign_in_button);
         mFacebookLogInButton.registerCallback(mFacebookCallbackManager,
                 new FacebookCallback<LoginResult>() {
                     @Override
@@ -96,46 +107,18 @@ public class SignInActivity extends AppCompatActivity {
                     }
                 }
         );
-
-        CheckNetworkState = new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context context, Intent intent) {
-                boolean NotConnected = intent.getBooleanExtra(ConnectivityManager.EXTRA_NO_CONNECTIVITY, false);
-                HandleConnection(NotConnected);
-            }
-        };
     }
 
-    private void HandleConnection(boolean NoConnection){
-        if(NoConnection){
-            mFacebookLogInButton.setEnabled(false);
-            mTwitterLoginButton.setEnabled(false);
-        }
-        else {
-            mFacebookLogInButton.setEnabled(true);
-            mTwitterLoginButton.setEnabled(true);
-        }
+
+    public void draw(ImageView imageView, int Rrs){
+
+        Resources res = getResources();
+        Bitmap src = BitmapFactory.decodeResource(res, Rrs);
+        RoundedBitmapDrawable dr = RoundedBitmapDrawableFactory.create(res, src);
+        dr.setCircular(true);
+        imageView.setImageDrawable(dr);
     }
 
-    public boolean isConnectionAvailable() {
-        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
-        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
-    }
-
-    @Override
-    public void onResume(){
-        super.onResume();
-        HandleConnection(!isConnectionAvailable());
-        IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
-        registerReceiver(CheckNetworkState, filter);
-    }
-
-    @Override
-    public void onPause(){
-        super.onPause();
-        unregisterReceiver(CheckNetworkState);
-    }
 
     public void HandleSignIn(){
         try

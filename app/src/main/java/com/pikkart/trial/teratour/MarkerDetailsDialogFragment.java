@@ -23,6 +23,9 @@ import android.widget.TextView;
 
 
 import com.facebook.login.LoginManager;
+import com.twitter.sdk.android.core.Twitter;
+import com.twitter.sdk.android.core.TwitterCore;
+import com.twitter.sdk.android.core.TwitterSession;
 
 
 // ...
@@ -66,6 +69,15 @@ public class MarkerDetailsDialogFragment extends DialogFragment {
         return inflater.inflate(R.layout.details_fragment, container);
     }
 
+    public void logoutTwitter() {
+        TwitterSession twitterSession = TwitterCore.getInstance().getSessionManager().getActiveSession();
+        if (twitterSession != null) {
+//            ClearCookies(getApplicationContext());
+            TwitterCore.getInstance().getSessionManager().clearActiveSession();
+            //Twitter.logOut();
+        }
+    }
+
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -86,6 +98,7 @@ public class MarkerDetailsDialogFragment extends DialogFragment {
             public void onClick(View v) {
                 try {
                     LoginManager.getInstance().logOut();
+                    logoutTwitter();
                     startActivity(new Intent(getActivity(), SignInActivity.class));
                     getActivity().finish();
                 } catch (Exception e) {
