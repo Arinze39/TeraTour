@@ -25,14 +25,15 @@
 
         <activity
         android:configChanges="screenSize|orientation"
-        android:name=".MainActivity"
-        android:label="@string/app_name" >
+        android:name=".SplashScreenActivity"
+        android:theme="@style/splashTheme">
+
     </activity>
 
         <activity
             android:configChanges="screenSize|orientation"
-            android:name=".SplashScreenActivity"
-            android:theme="@style/splashTheme"
+            android:name=".MainActivity"
+            android:label="@string/app_name"
             >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

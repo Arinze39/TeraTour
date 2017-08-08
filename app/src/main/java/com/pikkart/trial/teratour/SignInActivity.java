@@ -32,8 +32,8 @@ public class SignInActivity extends AppCompatActivity {
 
     //declare facebook callbackmanager
     CallbackManager mFacebookCallbackManager;
-    LoginButton mFacebookSignInButton;
-    TwitterLoginButton loginButton;
+    LoginButton mFacebookLogInButton;
+    TwitterLoginButton mTwitterloginButton;
     AccessTokenTracker accessTokenTracker;
     AccessToken accessToken;
 
@@ -50,8 +50,8 @@ public class SignInActivity extends AppCompatActivity {
 
 
         //set the callback for twitter button
-        loginButton = (TwitterLoginButton) findViewById(R.id.login_button);
-        loginButton.setCallback(new Callback<TwitterSession>() {
+        mTwitterloginButton = (TwitterLoginButton) findViewById(R.id.login_button);
+        mTwitterloginButton.setCallback(new Callback<TwitterSession>() {
             @Override
             public void success(Result<TwitterSession> result) {
                 //TODO: Do something with result, which provides a TwitterSession for making API calls
@@ -66,8 +66,8 @@ public class SignInActivity extends AppCompatActivity {
         });
 
         //Setup the callback for facebook button
-        mFacebookSignInButton = (LoginButton)findViewById(R.id.facebook_sign_in_button);
-        mFacebookSignInButton.registerCallback(mFacebookCallbackManager,
+        mFacebookLogInButton = (LoginButton)findViewById(R.id.facebook_sign_in_button);
+        mFacebookLogInButton.registerCallback(mFacebookCallbackManager,
                 new FacebookCallback<LoginResult>() {
                     @Override
                     public void onSuccess(final LoginResult loginResult) {
@@ -95,7 +95,7 @@ public class SignInActivity extends AppCompatActivity {
         try
         {
             //Advance to the next Screen
-            startActivity(new Intent(getBaseContext(),MainActivity.class));
+            startActivity(new Intent(getBaseContext(),ImageCloudRecoClass.class));
         }
         catch (Exception ex)
         {
@@ -110,7 +110,6 @@ public class SignInActivity extends AppCompatActivity {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        //accessTokenTracker.stopTracking();
     }
 
     @Override
@@ -127,7 +126,7 @@ public class SignInActivity extends AppCompatActivity {
         mFacebookCallbackManager.onActivityResult(requestCode, resultCode, data);
 
         // Pass the activity result to the TwitterLogin button.
-        loginButton.onActivityResult(requestCode, resultCode, data);
+        mTwitterloginButton.onActivityResult(requestCode, resultCode, data);
     }
 
     @Override

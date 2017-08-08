@@ -12,13 +12,14 @@ import com.facebook.AccessToken;
 import com.facebook.AccessTokenTracker;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookSdk;
-import com.pikkart.trial.teratour.R;
+
 
 public class SplashScreenActivity extends AppCompatActivity {
     long SplashScreenTimer = 2000;
     String AppName = "TeraTour";
-    //declare facebook callbackmanager
-    CallbackManager mFacebookCallbackManager;
+
+    //declare facebook CallBackManager
+   // CallbackManager mFacebookCallbackManager;
     AccessTokenTracker accessTokenTracker;
     AccessToken accessToken;
     boolean loggedIn;
@@ -29,7 +30,7 @@ public class SplashScreenActivity extends AppCompatActivity {
 
         //Facebook SDK Initialization
         FacebookSdk.sdkInitialize(getApplicationContext());
-        mFacebookCallbackManager = CallbackManager.Factory.create();
+        //mFacebookCallbackManager = CallbackManager.Factory.create();
 
         //Draw the splash screen
         setContentView(R.layout.activity_splash_screen);
@@ -63,7 +64,7 @@ public class SplashScreenActivity extends AppCompatActivity {
                     //Advance to the next Screen
                     if(loggedIn)
                     {
-                        startActivity(new Intent(getBaseContext(),MainActivity.class));
+                        startActivity(new Intent(getBaseContext(),ImageCloudRecoClass.class));
                     }
                     else{
                         startActivity(new Intent(getBaseContext(),SignInActivity.class));
@@ -122,6 +123,6 @@ public class SplashScreenActivity extends AppCompatActivity {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        mFacebookCallbackManager.onActivityResult(requestCode, resultCode, data);
+       // mFacebookCallbackManager.onActivityResult(requestCode, resultCode, data);
     }
 }

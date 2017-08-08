@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
 
         if(Build.VERSION.SDK_INT < 23){
-            startActivity(new Intent(getBaseContext(),ImageCloudRecoClass.class));
+            startActivity(new Intent(getBaseContext(),SplashScreenActivity.class));
             finish();
         }
         else
@@ -77,7 +77,7 @@ public class MainActivity extends AppCompatActivity{
             ActivityCompat.requestPermissions(this, permissions, code);
         }
         else {
-            startActivity(new Intent(getBaseContext(),ImageCloudRecoClass.class));
+            startActivity(new Intent(getBaseContext(),SplashScreenActivity.class));
             finish();
         }
     }
@@ -103,7 +103,7 @@ public class MainActivity extends AppCompatActivity{
                 ok = ok && (grantResults[i]==PackageManager.PERMISSION_GRANTED);
             }
             if(ok) {
-                startActivity(new Intent(getBaseContext(),ImageCloudRecoClass.class));
+                startActivity(new Intent(getBaseContext(),SplashScreenActivity.class));
                 finish();
             }
             else {
