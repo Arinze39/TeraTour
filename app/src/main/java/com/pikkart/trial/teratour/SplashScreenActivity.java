@@ -12,6 +12,9 @@ import com.facebook.AccessToken;
 import com.facebook.AccessTokenTracker;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookSdk;
+import com.twitter.sdk.android.core.TwitterAuthToken;
+import com.twitter.sdk.android.core.TwitterCore;
+import com.twitter.sdk.android.core.TwitterSession;
 
 
 public class SplashScreenActivity extends AppCompatActivity {
@@ -20,9 +23,14 @@ public class SplashScreenActivity extends AppCompatActivity {
 
     //declare facebook CallBackManager
    // CallbackManager mFacebookCallbackManager;
-    AccessTokenTracker accessTokenTracker;
+//    AccessTokenTracker accessTokenTracker;
     AccessToken accessToken;
-    boolean loggedIn;
+    TwitterSession mTwitterSession;
+
+//    TwitterAuthToken mTwitterAuthToken;
+//    boolean mLoggedIn;
+//    String mTwiterToken;
+//    String mTwitterSecret;
 
     @Override
     public void onCreate(Bundle SavedInstanceState) {
@@ -35,7 +43,7 @@ public class SplashScreenActivity extends AppCompatActivity {
         //Draw the splash screen
         setContentView(R.layout.activity_splash_screen);
 
-        accessTokenTracker = new AccessTokenTracker() {
+     /*   accessTokenTracker = new AccessTokenTracker() {
             @Override
             protected void onCurrentAccessTokenChanged(
                     AccessToken oldAccessToken,
@@ -48,9 +56,14 @@ public class SplashScreenActivity extends AppCompatActivity {
         // If the access token is available already assign it.
         accessToken = AccessToken.getCurrentAccessToken();
 
-        loggedIn = accessToken != null;
+        mLoggedIn = accessToken != null;
 
-        //Create a thread to hold the splash screen for 3 sec
+
+        mTwitterAuthToken = mTwitterSession.getAuthToken();
+        mTwiterToken = mTwitterAuthToken.token;
+        mTwitterSecret = mTwitterAuthToken.secret;     */
+
+        //Create a thread to hold the splash screen for 2 sec
         Thread TimerThread = new Thread() {
             public void run() {
                 try {
@@ -60,9 +73,8 @@ public class SplashScreenActivity extends AppCompatActivity {
                         sleep(100); //Wait for 1 sec
                         time += 100;
                     }
-
                     //Advance to the next Screen
-                    if(loggedIn)
+                    if(IsUserLoggedIn())
                     {
                         startActivity(new Intent(getBaseContext(),ImageCloudRecoClass.class));
                     }
@@ -84,6 +96,28 @@ public class SplashScreenActivity extends AppCompatActivity {
 
         };
         TimerThread.start();
+    }
+
+    private boolean IsUserLoggedIn(){
+        boolean loggedIn = false;
+        boolean FbLoggedIn;
+        boolean TwitterLoggedIn;
+
+        try{
+            accessToken = AccessToken.getCurrentAccessToken();
+            mTwitterSession = TwitterCore.getInstance().getSessionManager().getActiveSession();
+            FbLoggedIn = accessToken != null;
+            TwitterLoggedIn = mTwitterSession != null;
+
+            loggedIn = FbLoggedIn || TwitterLoggedIn;
+
+
+        }
+        catch (Exception ex){
+            Toast.makeText(getApplicationContext(),ex.getMessage(),Toast.LENGTH_SHORT).show();
+
+        }
+        return loggedIn;
     }
 
     @Override
@@ -116,7 +150,7 @@ public class SplashScreenActivity extends AppCompatActivity {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        accessTokenTracker.stopTracking();
+//        accessTokenTracker.stopTracking();
     }
 
     @Override

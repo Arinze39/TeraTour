@@ -1,6 +1,10 @@
 package com.pikkart.trial.teratour;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -36,6 +40,7 @@ public class SignInActivity extends AppCompatActivity {
     TwitterLoginButton mTwitterloginButton;
     AccessTokenTracker accessTokenTracker;
     AccessToken accessToken;
+    private BroadcastReceiver networkReceiver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,6 +94,20 @@ public class SignInActivity extends AppCompatActivity {
                     }
                 }
         );
+
+        networkReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                if(intent.getExtras()!=null) {
+                    NetworkInfo ni=(NetworkInfo) intent.getExtras().get(ConnectivityManager.EXTRA_NETWORK_INFO);
+                    if(ni!=null && ni.getState()== NetworkInfo.State.CONNECTED) {
+                        // we're connected
+                    }
+                }
+                // we're not connected
+            }
+        };
+
     }
 
     public void HandleSignIn(){
@@ -108,17 +127,6 @@ public class SignInActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onDestroy() {
-        super.onDestroy();
-    }
-
-    @Override
-    public void onResume()
-    {
-        super.onResume();
-    }
-
-    @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
@@ -133,7 +141,7 @@ public class SignInActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_sign_in, menu);
-        return true;
+        return false;
     }
 
     @Override
@@ -151,3 +159,5 @@ public class SignInActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 }
+
+
