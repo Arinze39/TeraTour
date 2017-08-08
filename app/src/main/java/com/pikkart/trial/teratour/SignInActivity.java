@@ -3,6 +3,7 @@ package com.pikkart.trial.teratour;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.support.v7.app.AppCompatActivity;
@@ -37,10 +38,11 @@ public class SignInActivity extends AppCompatActivity {
     //declare facebook callbackmanager
     CallbackManager mFacebookCallbackManager;
     LoginButton mFacebookLogInButton;
-    TwitterLoginButton mTwitterloginButton;
-    AccessTokenTracker accessTokenTracker;
-    AccessToken accessToken;
-    private BroadcastReceiver networkReceiver;
+    TwitterLoginButton mTwitterLoginButton;
+//    AccessTokenTracker accessTokenTracker;
+//    AccessToken accessToken;
+    BroadcastReceiver CheckNetworkState;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,8 +57,8 @@ public class SignInActivity extends AppCompatActivity {
 
 
         //set the callback for twitter button
-        mTwitterloginButton = (TwitterLoginButton) findViewById(R.id.login_button);
-        mTwitterloginButton.setCallback(new Callback<TwitterSession>() {
+        mTwitterLoginButton = (TwitterLoginButton) findViewById(R.id.login_button);
+        mTwitterLoginButton.setCallback(new Callback<TwitterSession>() {
             @Override
             public void success(Result<TwitterSession> result) {
                 //TODO: Do something with result, which provides a TwitterSession for making API calls
@@ -95,19 +97,44 @@ public class SignInActivity extends AppCompatActivity {
                 }
         );
 
-        networkReceiver = new BroadcastReceiver() {
+        CheckNetworkState = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
-                if(intent.getExtras()!=null) {
-                    NetworkInfo ni=(NetworkInfo) intent.getExtras().get(ConnectivityManager.EXTRA_NETWORK_INFO);
-                    if(ni!=null && ni.getState()== NetworkInfo.State.CONNECTED) {
-                        // we're connected
-                    }
-                }
-                // we're not connected
+                boolean NotConnected = intent.getBooleanExtra(ConnectivityManager.EXTRA_NO_CONNECTIVITY, false);
+                HandleConnection(NotConnected);
             }
         };
+    }
 
+    private void HandleConnection(boolean NoConnection){
+        if(NoConnection){
+            mFacebookLogInButton.setEnabled(false);
+            mTwitterLoginButton.setEnabled(false);
+        }
+        else {
+            mFacebookLogInButton.setEnabled(true);
+            mTwitterLoginButton.setEnabled(true);
+        }
+    }
+
+    public boolean isConnectionAvailable() {
+        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        HandleConnection(!isConnectionAvailable());
+        IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+        registerReceiver(CheckNetworkState, filter);
+    }
+
+    @Override
+    public void onPause(){
+        super.onPause();
+        unregisterReceiver(CheckNetworkState);
     }
 
     public void HandleSignIn(){
@@ -134,7 +161,7 @@ public class SignInActivity extends AppCompatActivity {
         mFacebookCallbackManager.onActivityResult(requestCode, resultCode, data);
 
         // Pass the activity result to the TwitterLogin button.
-        mTwitterloginButton.onActivityResult(requestCode, resultCode, data);
+        mTwitterLoginButton.onActivityResult(requestCode, resultCode, data);
     }
 
     @Override
@@ -159,5 +186,6 @@ public class SignInActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 }
+
 
 
