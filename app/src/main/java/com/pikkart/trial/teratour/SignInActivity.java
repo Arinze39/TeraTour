@@ -110,14 +110,7 @@ public class SignInActivity extends AppCompatActivity {
     }
 
 
-    public void draw(ImageView imageView, int Rrs){
 
-        Resources res = getResources();
-        Bitmap src = BitmapFactory.decodeResource(res, Rrs);
-        RoundedBitmapDrawable dr = RoundedBitmapDrawableFactory.create(res, src);
-        dr.setCircular(true);
-        imageView.setImageDrawable(dr);
-    }
 
 
     public void HandleSignIn(){

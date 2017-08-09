@@ -4,6 +4,7 @@ package com.pikkart.trial.teratour;
  * Created by Arinze on 8/2/2017.
  */
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
@@ -59,23 +60,13 @@ public class MarkerDetailsDialogFragment extends DialogFragment {
         super.onCreate(SavedInstanceState);
         int style = DialogFragment.STYLE_NO_TITLE, theme = android.R.style.Theme_DeviceDefault_Light_Dialog;
         setStyle(style,theme);
-
-
+        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         return inflater.inflate(R.layout.details_fragment, container);
-    }
-
-    public void logoutTwitter() {
-        TwitterSession twitterSession = TwitterCore.getInstance().getSessionManager().getActiveSession();
-        if (twitterSession != null) {
-//            ClearCookies(getApplicationContext());
-            TwitterCore.getInstance().getSessionManager().clearActiveSession();
-            //Twitter.logOut();
-        }
     }
 
     @Override
@@ -96,14 +87,7 @@ public class MarkerDetailsDialogFragment extends DialogFragment {
         downloadButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                try {
-                    LoginManager.getInstance().logOut();
-                    logoutTwitter();
-                    startActivity(new Intent(getActivity(), SignInActivity.class));
-                    getActivity().finish();
-                } catch (Exception e) {
-                    Log.e("LogOutError", e.getMessage());
-                }
+               
 
             }
         });

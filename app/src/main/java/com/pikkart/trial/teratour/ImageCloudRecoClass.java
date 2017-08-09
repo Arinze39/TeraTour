@@ -1,7 +1,11 @@
 package com.pikkart.trial.teratour;
 
-import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
+import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.SurfaceTexture;
 import android.media.MediaPlayer;
 import android.net.ConnectivityManager;
@@ -9,10 +13,13 @@ import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -20,13 +27,17 @@ import android.view.Surface;
 import android.view.TextureView;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.facebook.login.LoginManager;
 import com.pikkart.ar.recognition.IRecognitionListener;
 import com.pikkart.ar.recognition.RecognitionFragment;
 import com.pikkart.ar.recognition.RecognitionOptions;
 import com.pikkart.ar.recognition.data.CloudRecognitionInfo;
 import com.pikkart.ar.recognition.items.Marker;
+import com.twitter.sdk.android.core.TwitterCore;
+import com.twitter.sdk.android.core.TwitterSession;
 
 
 import java.io.IOException;
@@ -38,6 +49,7 @@ import java.io.IOException;
 public class ImageCloudRecoClass extends AppCompatActivity implements IRecognitionListener, View.OnTouchListener{
 
     ARView m_arView;
+    ImageView image;
     public static String customData;
     private String databaseName = "artdatabase_314";
 
@@ -53,19 +65,53 @@ public class ImageCloudRecoClass extends AppCompatActivity implements IRecogniti
     {
         setContentView(R.layout.activity_main);
         m_arView = new ARView(this);
+        image = new ImageView(this);
         m_arView.setOnTouchListener(this);
+        image.setOnTouchListener(this);
+        draw(image, R.drawable.image1);
         addContentView(m_arView, new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT));
-
+        addContentView(image, new FrameLayout.LayoutParams(160, 160));
         RecognitionFragment _cameraFragment = ((RecognitionFragment) getFragmentManager().findFragmentById(R.id.pikkart_ar_fragment));
         _cameraFragment.startRecognition(
                 new RecognitionOptions(
                         RecognitionOptions.RecognitionStorage.GLOBAL,
-                        RecognitionOptions.RecognitionMode.TAP_TO_SCAN,
+                        RecognitionOptions.RecognitionMode.CONTINUOUS_SCAN,
                         new CloudRecognitionInfo(new String[]{databaseName})
                 ),
                 this);
 
+        HideActionBar();
+
         showMarkerDetails("Govt. House Enugu Ind. Layout. Enugu");
+    }
+
+    private void HideActionBar(){
+
+        Handler h = new Handler();
+
+        h.postDelayed(new Runnable() {
+
+            @Override
+            public void run() {
+                try {
+                    // Set up the action bar.
+                    final ActionBar actionBar = getSupportActionBar();
+                    actionBar.hide();
+                    image.setVisibility(View.INVISIBLE);
+                } catch (Exception ex) {
+                    Log.e("ERROR", ex.getMessage());
+                }
+            }
+        }, 3000);
+    }
+
+    public void draw(ImageView imageView, int Rrs){
+
+        Resources res = getResources();
+        Bitmap src = BitmapFactory.decodeResource(res, Rrs);
+        RoundedBitmapDrawable dr = RoundedBitmapDrawableFactory.create(res, src);
+        dr.setCircular(true);
+        imageView.setImageDrawable(dr);
     }
 
     private void showMarkerDetails(String Title) {
@@ -85,6 +131,15 @@ public class ImageCloudRecoClass extends AppCompatActivity implements IRecogniti
                         new CloudRecognitionInfo(new String[]{databaseName})
                 ),
                 this);
+    }
+
+    public void logoutTwitter() {
+        TwitterSession twitterSession = TwitterCore.getInstance().getSessionManager().getActiveSession();
+        if (twitterSession != null) {
+//            ClearCookies(getApplicationContext());
+            TwitterCore.getInstance().getSessionManager().clearActiveSession();
+            //Twitter.logOut();
+        }
     }
 
     @Override
@@ -107,6 +162,22 @@ public class ImageCloudRecoClass extends AppCompatActivity implements IRecogniti
         super.onPause();
 
         if(m_arView!=null) m_arView.onPause();
+    }
+
+    private void ShowProgressDialog(){
+        final ProgressDialog dialog = ProgressDialog.show(this,"","Signing Out",true);
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try{
+                    Thread.sleep(500);
+                    dialog.dismiss();
+                }
+                catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 
     @Override
@@ -133,7 +204,36 @@ public class ImageCloudRecoClass extends AppCompatActivity implements IRecogniti
 
     @Override
     public boolean onTouch(View view, MotionEvent motionEvent) {
-        doRecognition();
+
+        if(view == image){
+            try {
+                ShowProgressDialog();
+                LoginManager.getInstance().logOut();
+                logoutTwitter();
+                startActivity(new Intent(getApplicationContext(), SignInActivity.class));
+                finish();
+            } catch (Exception e) {
+                Log.e("LogOutError", e.getMessage());
+            }
+        }
+        else{
+            try {
+                // Set up the action bar.
+                final ActionBar actionBar = getSupportActionBar();
+                if (actionBar.isShowing()) {
+                    actionBar.hide();
+                    image.setVisibility(View.INVISIBLE);
+                } else {
+                    actionBar.show();
+                    image.setVisibility(View.VISIBLE);
+                    HideActionBar();
+                }
+            }
+            catch (Exception ex){
+                Log.e("ERROR",ex.getMessage());
+            }
+        }
+//        doRecognition();
         return false;
     }
 

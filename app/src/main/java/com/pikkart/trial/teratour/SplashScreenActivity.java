@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.WindowManager;
 import android.widget.Toast;
 
 import com.facebook.AccessToken;
@@ -36,6 +37,8 @@ public class SplashScreenActivity extends AppCompatActivity {
     @Override
     public void onCreate(Bundle SavedInstanceState) {
         super.onCreate(SavedInstanceState);
+
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         //Facebook SDK Initialization
         FacebookSdk.sdkInitialize(getApplicationContext());
