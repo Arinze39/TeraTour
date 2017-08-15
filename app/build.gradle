@@ -29,6 +29,8 @@ dependencies {
     compile 'com.twitter.sdk.android:tweet-composer:3.1.0'
     // Include all the Facebook APIs
     compile 'com.facebook.android:facebook-android-sdk:4.6.0'
+    //Include api to load image from web
+    compile "com.squareup.picasso:picasso:2.4.0"
 
 }
 

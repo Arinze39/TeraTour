@@ -1,5 +1,6 @@
 package com.pikkart.trial.teratour;
 
+import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -31,6 +32,7 @@ import com.facebook.login.widget.LoginButton;
 import com.twitter.sdk.android.core.Callback;
 import com.twitter.sdk.android.core.Result;
 import com.twitter.sdk.android.core.Twitter;
+import com.twitter.sdk.android.core.TwitterCore;
 import com.twitter.sdk.android.core.TwitterException;
 import com.twitter.sdk.android.core.TwitterSession;
 import com.twitter.sdk.android.core.identity.TwitterLoginButton;
@@ -38,15 +40,16 @@ import com.twitter.sdk.android.core.models.User;
 
 import java.util.Arrays;
 
+import retrofit2.Call;
+
 public class SignInActivity extends AppCompatActivity {
 
     //declare facebook callbackmanager
     CallbackManager mFacebookCallbackManager;
     LoginButton mFacebookLogInButton;
     TwitterLoginButton mTwitterLoginButton;
-//    AccessTokenTracker accessTokenTracker;
-//    AccessToken accessToken;
-    BroadcastReceiver CheckNetworkState;
+    String mPhotoUrlOriginalSize;
+    String mName;
 
 
     @Override
@@ -60,20 +63,13 @@ public class SignInActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_sign_in);
 
-//        ImageView image = (ImageView)findViewById(R.id.displayImage);
-//        draw(image, R.drawable.image1);
-
-
-
-
-
         //set the callback for twitter button
         mTwitterLoginButton = (TwitterLoginButton) findViewById(R.id.login_button);
         mTwitterLoginButton.setCallback(new Callback<TwitterSession>() {
             @Override
             public void success(Result<TwitterSession> result) {
                 //TODO: Do something with result, which provides a TwitterSession for making API calls
-                HandleSignIn();
+                HandleTwitterSignIn();
             }
 
             @Override
@@ -108,9 +104,38 @@ public class SignInActivity extends AppCompatActivity {
                 }
         );
     }
+    private void HandleTwitterSignIn(){
+        final Bundle Data = new Bundle();
+        final Intent intent = new Intent(SignInActivity.this, ImageCloudRecoClass.class);
+        final ProgressDialog dialog = ProgressDialog.show(this,"","Signing In",true);
+        Call<User> user = TwitterCore.getInstance().getApiClient().getAccountService().verifyCredentials(false, false, false);
+        user.enqueue(new Callback<User>() {
+            @Override
+            public void success(Result<User> userResult) {
+                //get Name of the user logged in
+                mName = userResult.data.name;
+                mPhotoUrlOriginalSize = userResult.data.profileImageUrl.replace("_normal", "");
 
+                //Save these data to be passed to Another Activity.
+                Data.putString("ProfilePicture", mPhotoUrlOriginalSize);
+                Data.putString("Name", mName);
 
+                //Pass the data to the Activity declared in the Intent.
+                intent.putExtras(Data);
+                startActivity(intent);
+                dialog.dismiss();
+                finish();
+            }
 
+            @Override
+            public void failure(TwitterException exc) {
+                Log.e("TwitterKit", "Verify Credentials Failure", exc);
+            }
+        });
+//        dialog.dismiss();
+//        startActivity(intent);
+//        finish();
+    }
 
 
     public void HandleSignIn(){

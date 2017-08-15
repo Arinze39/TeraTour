@@ -84,6 +84,7 @@ public class MarkerDetailsDialogFragment extends DialogFragment {
         TitleTextView.setMovementMethod(new ScrollingMovementMethod());
         TitleTextView.setText(title);
 
+        downloadButton.setEnabled(false);
         downloadButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

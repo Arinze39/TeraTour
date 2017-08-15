@@ -110,8 +110,8 @@
     <orderEntry type="library" exported="" name="support-annotations-26.0.0-alpha1" level="project" />
     <orderEntry type="library" exported="" name="support-v4-26.0.0-alpha1" level="project" />
     <orderEntry type="library" exported="" name="twitter-text-1.14.3" level="project" />
-    <orderEntry type="library" exported="" name="okio-1.9.0" level="project" />
     <orderEntry type="library" exported="" name="bolts-android-1.2.0" level="project" />
+    <orderEntry type="library" exported="" name="okio-1.9.0" level="project" />
     <orderEntry type="library" exported="" name="picasso-2.5.2" level="project" />
     <orderEntry type="library" exported="" name="twitter-3.1.0" level="project" />
     <orderEntry type="library" exported="" name="facebook-android-sdk-4.6.0" level="project" />
